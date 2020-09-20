@@ -4,14 +4,17 @@
     ASMMT (Airsoft Smart Mine Management Tool)
   </a>
 
-  <button type="button" *ngIf="!isBluetoothDeviceConnected" (click)="onConnectBluetoothClick()"
-    class="btn btn-outline-info">
-    Connect
-    <i class="fab fa-bluetooth-b"></i>
-  </button>
-  <button type="button" *ngIf="isBluetoothDeviceConnected" (click)="onDisconnectBluetoothClick()"
-    class="btn btn-outline-warning">
-    Disconnect
-    <i class="fab fa-bluetooth-b"></i>
-  </button>
+  <ul class="nav navbar-nav ml-auto">
+    <button type="button" *ngIf="!isBluetoothDeviceConnected" (click)="onConnectBluetoothClick()"
+      class="btn btn-outline-info">
+      Connect
+      <i class="fab fa-bluetooth-b"></i>
+    </button>
+
+    <button type="button" *ngIf="isBluetoothDeviceConnected" (click)="onDisconnectBluetoothClick()"
+      class="btn btn-outline-warning">
+      Disconnect
+      <i class="fab fa-bluetooth-b"></i>
+    </button>
+  </ul>
 </nav>

@@ -19,6 +19,8 @@ export class HomeNavComponent {
   }
 
   public onDisconnectBluetoothClick(): void {
-    this.bluetoothService.disconnectFromBluetoothDevice();
+    if (confirm('Are you sure that you want to disconnect?')) {
+      this.bluetoothService.disconnectFromBluetoothDevice();
+    }
   }
 }

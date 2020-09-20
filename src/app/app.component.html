@@ -1,5 +1,7 @@
 <app-home-nav></app-home-nav>
 
 <div class="container">
-  <app-home-connect></app-home-connect>
+  <app-home-status *ngIf="!isBluetoothDeviceConnected"></app-home-status>
+
+  <app-home-battery *ngIf="isBluetoothDeviceConnected"></app-home-battery>
 </div>
