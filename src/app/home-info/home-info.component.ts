@@ -47,7 +47,7 @@ export class HomeInfoComponent {
 
         bleGattService.getCharacteristic(BleConstants.CustomService.Characteristics.RuntimeInSec)
           .then((bleGattCharacteristic: BluetoothRemoteGATTCharacteristic) => bleGattCharacteristic.readValue())
-          .then((bleGattCharacteristicValue: DataView) => this.configuration.RuntimeInSec = bleGattCharacteristicValue.getUint32(0));
+          .then((bleGattCharacteristicValue: DataView) => this.configuration.RuntimeInSec = bleGattCharacteristicValue.getUint8(0));
 
         bleGattService.getCharacteristic(BleConstants.CustomService.Characteristics.Mode)
           .then((bleGattCharacteristic: BluetoothRemoteGATTCharacteristic) => bleGattCharacteristic.readValue())
@@ -59,7 +59,7 @@ export class HomeInfoComponent {
 
         bleGattService.getCharacteristic(BleConstants.CustomService.Characteristics.ExplodeDurationInMs)
           .then((bleGattCharacteristic: BluetoothRemoteGATTCharacteristic) => bleGattCharacteristic.readValue())
-          .then((bleGattCharacteristicValue: DataView) => this.configuration.ExplodeDurationInMs = bleGattCharacteristicValue.getUint32(0));
+          .then((bleGattCharacteristicValue: DataView) => this.configuration.ExplodeDurationInMs = bleGattCharacteristicValue.getUint8(0));
       });
   }
 }
