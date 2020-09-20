@@ -5,98 +5,133 @@
 
 <div id="configuration" class="collapse">
   <div class="card card-body">
-    <div class="row">
-      <div class="col-12">
-        Version:
+    <form>
+      <fieldset>
+        <div class="form-group row">
+          <label for="mode" class="col-4 col-form-label">
+            Mode:
+          </label>
 
-        <span *ngIf="configuration.Version === undefined">
-          <div class="spinner-border spinner-border-sm" role="status">
-            <span class="sr-only">
-              Loading...
+          <div class="col-6">
+            <span *ngIf="configuration.Mode === undefined" class="form-control-plaintext">
+              <div class="spinner-border spinner-border-sm" role="status">
+                <span class="sr-only">
+                  Loading...
+                </span>
+              </div>
+            </span>
+
+            <span *ngIf="configuration.Mode === 0" class="form-control-plaintext">
+              <i class="fas fa-walking"></i>
+              <i class="fab fa-bluetooth"></i>
+            </span>
+
+            <span *ngIf="configuration.Mode === 1" class="form-control-plaintext">
+              <i class="fas fa-walking"></i>
+            </span>
+
+            <span *ngIf="configuration.Mode === 2" class="form-control-plaintext">
+              <i class="fab fa-bluetooth"></i>
             </span>
           </div>
-        </span>
 
-        <span *ngIf="configuration.Version !== undefined">
-          {{ configuration.Version }}
-        </span>
-      </div>
+          <div class="col-12">
+            <select id="mode" class="form-control">
+              <option value="0">
+                Sensor + BLE
+              </option>
+              <option value="1">
+                Sensor only
+              </option>
+              <option value="2">
+                BLE only
+              </option>
+            </select>
+          </div>
+        </div>
 
-      <div class="col-12">
-        Runtime:
+        <div class="form-group row">
+          <label for="explodeDurationInMs" class="col-4 col-form-label">
+            Explode duration:
+          </label>
 
-        <span *ngIf="configuration.RuntimeInSec === undefined">
-          <div class="spinner-border spinner-border-sm" role="status">
-            <span class="sr-only">
-              Loading...
+          <div class="col-6">
+            <span *ngIf="configuration.ExplodeDurationInMs === undefined">
+              <div class="spinner-border spinner-border-sm" role="status">
+                <span class="sr-only">
+                  Loading...
+                </span>
+              </div>
+            </span>
+
+            <span *ngIf="configuration.ExplodeDurationInMs !== undefined" class="form-control-plaintext">
+              {{ configuration.ExplodeDurationInMs }}
+              milliseconds
             </span>
           </div>
-        </span>
 
-        <span *ngIf="configuration.RuntimeInSec">
-          {{ configuration.RuntimeInSec }}
-        </span>
+          <div *ngIf="configuration.ExplodeDurationInMs !== undefined" class="col-12">
+            <input id="explodeDurationInMs" type="range" min="1" max="60000" [value]="configuration.ExplodeDurationInMs"
+              class="custom-range">
+          </div>
+        </div>
 
-        seconds
-      </div>
+        <div class="form-group">
+          <div class="custom-control custom-checkbox">
+            <input id="isExploded" type="checkbox" disabled="" [checked]="configuration.IsExploded"
+              class="custom-control-input">
 
-      <div class="col-12">
-        Mode:
+            <label class="custom-control-label" for="isExploded">
+              Is exploded
+            </label>
+          </div>
+        </div>
 
-        <span *ngIf="configuration.Mode === undefined">
-          <div class="spinner-border spinner-border-sm" role="status">
-            <span class="sr-only">
-              Loading...
+        <div class="form-group row">
+          <label for="version" class="col-4 col-form-label">
+            Version:
+          </label>
+
+          <div class="col-6">
+            <span *ngIf="configuration.Version === undefined">
+              <div class="spinner-border spinner-border-sm" role="status">
+                <span class="sr-only">
+                  Loading...
+                </span>
+              </div>
+            </span>
+
+            <span *ngIf="configuration.Version !== undefined" id="version" class="form-control-plaintext">
+              {{ configuration.Version }}
             </span>
           </div>
-        </span>
+        </div>
 
-        <select *ngIf="configuration.Mode !== undefined">
-          <option value="0">
-            Sensor + BLE
-          </option>
-          <option value="1">
-            Sensor only
-          </option>
-          <option value="2">
-            BLE only
-          </option>
-        </select>
-      </div>
+        <div class="form-group row">
+          <label for="runtimeInSec" class="col-4 col-form-label">
+            Runtime:
+          </label>
 
-      <div class="col-12">
-        Is exploded:
+          <div class="col-6">
+            <span *ngIf="configuration.RuntimeInSec === undefined">
+              <div class="spinner-border spinner-border-sm" role="status">
+                <span class="sr-only">
+                  Loading...
+                </span>
+              </div>
+            </span>
 
-        <span *ngIf="configuration.IsExploded === undefined">
-          <div class="spinner-border spinner-border-sm" role="status">
-            <span class="sr-only">
-              Loading...
+            <span *ngIf="configuration.RuntimeInSec !== undefined" id="runtimeInSec" class="form-control-plaintext">
+              {{ configuration.RuntimeInSec }}
+              seconds
             </span>
           </div>
-        </span>
+        </div>
 
-        <span *ngIf="configuration.IsExploded !== undefined">
-          {{ configuration.IsExploded }}
-        </span>
-      </div>
-
-      <div class="col-12">
-        Explode duration:
-
-        <span *ngIf="configuration.ExplodeDurationInMs === undefined">
-          <div class="spinner-border spinner-border-sm" role="status">
-            <span class="sr-only">
-              Loading...
-            </span>
-          </div>
-        </span>
-
-        <input *ngIf="configuration.ExplodeDurationInMs !== undefined" type="range" min="1" max="60000"
-          [value]="configuration.ExplodeDurationInMs">
-
-        {{ configuration.ExplodeDurationInMs }}
-        milliseconds
-      </div>
-    </div>
+        <button type="submit" class="btn btn-primary btn-block">
+          Save
+        </button>
+      </fieldset>
+    </form>
   </div>
 </div>
