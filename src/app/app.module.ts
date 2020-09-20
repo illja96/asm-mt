@@ -7,6 +7,7 @@ import { HomeInfoComponent } from './home-info/home-info.component';
 import { HomeInfoStatusComponent } from './home-info-status/home-info-status.component';
 import { HomeConfigurationComponent } from './home-configuration/home-configuration.component';
 import { BluetoothService } from '../services/bluetooth.service';
+import { ConfigurationService } from '../services/configuration.service';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,10 @@ import { BluetoothService } from '../services/bluetooth.service';
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [BluetoothService],
+  providers: [
+    BluetoothService,
+    ConfigurationService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

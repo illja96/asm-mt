@@ -15,20 +15,22 @@ export class BluetoothService {
     this.isBluetoothDeviceConnectedSubject = new BehaviorSubject<boolean>(false);
   }
 
-  public promptConnectToBluetoothDevice(): void {
+  public async promptConnectToBluetoothDevice(): Promise<void> {
     const requestDeviceOptions: RequestDeviceOptions = {
-      filters: [{ name: 'Airsoft smart mine' }],
+      filters: [{ namePrefix: 'ASM' }],
       optionalServices: [BleConstants.BatteryService.UUID, BleConstants.CustomService.UUID]
     };
 
-    navigator.bluetooth.requestDevice(requestDeviceOptions)
-      .then((bluetoothDevice: BluetoothDevice) => bluetoothDevice.gatt.connect())
-      .then((bleGattServer: BluetoothRemoteGATTServer) => this.bleGattServerSubject.next(bleGattServer))
-      .then(() => this.isBluetoothDeviceConnectedSubject.next(true))
-      .catch((error) => {
-        console.error(error);
-        this.isBluetoothDeviceConnectedSubject.next(false);
-      });
+    const bluetoothDevice: BluetoothDevice = await navigator.bluetooth.requestDevice(requestDeviceOptions);
+    const bleGattServer: BluetoothRemoteGATTServer = await bluetoothDevice.gatt.connect();
+
+    bluetoothDevice.addEventListener('gattserverdisconnected', (event: Event) => {
+      this.bleGattServerSubject.next(undefined);
+      this.isBluetoothDeviceConnectedSubject.next(false);
+    });
+
+    this.bleGattServerSubject.next(bleGattServer);
+    this.isBluetoothDeviceConnectedSubject.next(true);
   }
 
   public disconnectFromBluetoothDevice(): void {
