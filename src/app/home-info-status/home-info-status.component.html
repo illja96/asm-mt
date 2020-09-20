@@ -1,0 +1,81 @@
+<div *ngIf="!isBluetoothDeviceConnected" class="row">
+  <div class="col-12 text-center">
+    <h1>
+      <i class="fas fa-skull-crossbones"></i>
+
+      <br>
+
+      NO CONNECTION
+    </h1>
+  </div>
+</div>
+
+<div *ngIf="isBluetoothDeviceConnected" class="row">
+  <div class="col-12 text-center">
+    <h1 *ngIf="batteryLevel === undefined" class="text-primary">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">
+          Loading...
+        </span>
+      </div>
+      <i class="fas fa-battery-empty"></i>
+    </h1>
+
+    <h1 *ngIf="batteryLevel >= 50" class="text-success">
+      {{ batteryLevel }} %
+      <i class="fas fa-battery-full"></i>
+    </h1>
+
+    <h1 *ngIf="batteryLevel >= 15 && batteryLevel < 50" class="text-warning">
+      {{ batteryLevel }} %
+      <i class="fas fa-battery-half"></i>
+    </h1>
+
+    <h1 *ngIf="batteryLevel < 15" class="text-danger">
+      {{ batteryLevel }} %
+      <i class="fas fa-battery-quarter"></i>
+    </h1>
+  </div>
+
+  <div class="col-6 text-center">
+    <h1 *ngIf="configuration.Mode === undefined" class="text-primary">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">
+          Loading...
+        </span>
+      </div>
+    </h1>
+
+    <h1 *ngIf="configuration.Mode === 0" class="text-info">
+      <i class="fas fa-walking"></i>
+      &nbsp;
+      <i class="fab fa-bluetooth"></i>
+    </h1>
+
+    <h1 *ngIf="configuration.Mode === 1" class="text-info">
+      <i class="fas fa-walking"></i>
+    </h1>
+
+    <h1 *ngIf="configuration.Mode === 2" class="text-info">
+      <i class="fab fa-bluetooth"></i>
+    </h1>
+  </div>
+
+  <div class="col-6 text-center">
+    <h1 *ngIf="configuration.IsExploded === undefined" class="text-primary">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">
+          Loading...
+        </span>
+      </div>
+    </h1>
+
+    <h1 *ngIf="configuration.IsExploded === false" class="text-success">
+      <i class="fas fa-bomb"></i>
+    </h1>
+
+    <h1 *ngIf="configuration.IsExploded === true" class="text-danger">
+      <i class="fas fa-bomb"></i>
+    </h1>
+  </div>
+</div>

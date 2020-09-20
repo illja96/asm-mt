@@ -1,0 +1,9 @@
+<div>
+  <app-home-info-status [isBluetoothDeviceConnected]="isBluetoothDeviceConnected" [batteryLevel]="batteryLevel"
+    [configuration]="configuration"></app-home-info-status>
+
+  <div *ngIf="isBluetoothDeviceConnected">
+    <hr>
+    <app-home-configuration [configuration]="configuration"></app-home-configuration>
+  </div>
+</div>

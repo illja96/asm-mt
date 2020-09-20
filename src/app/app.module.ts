@@ -3,16 +3,18 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeNavComponent } from './home-nav/home-nav.component';
-import { HomeStatusComponent } from './home-status/home-status.component';
-import { HomeBatteryComponent } from './home-battery/home-battery.component';
+import { HomeInfoComponent } from './home-info/home-info.component';
+import { HomeInfoStatusComponent } from './home-info-status/home-info-status.component';
+import { HomeConfigurationComponent } from './home-configuration/home-configuration.component';
 import { BluetoothService } from '../services/bluetooth.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeNavComponent,
-    HomeBatteryComponent,
-    HomeStatusComponent
+    HomeInfoComponent,
+    HomeInfoStatusComponent,
+    HomeConfigurationComponent
   ],
   imports: [
     BrowserModule,

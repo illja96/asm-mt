@@ -6,5 +6,4 @@ export class Configuration {
   public Mode: Mode;
   public IsExploded: boolean;
   public ExplodeDurationInMs: number;
-  public IsForceExplodeViaBleInitiated: boolean;
 }

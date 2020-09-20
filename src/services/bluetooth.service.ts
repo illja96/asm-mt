@@ -2,19 +2,16 @@
 
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { take, tap } from 'rxjs/operators';
 import { BleConstants } from '../constants/ble-constants';
 
 @Injectable()
 export class BluetoothService {
-  private bleGattServer: BluetoothRemoteGATTServer;
   private bleGattServerSubject: BehaviorSubject<BluetoothRemoteGATTServer>;
-
   private isBluetoothDeviceConnectedSubject: BehaviorSubject<boolean>;
 
   constructor() {
-    this.bleGattServer = undefined;
     this.bleGattServerSubject = new BehaviorSubject<BluetoothRemoteGATTServer>(undefined);
-
     this.isBluetoothDeviceConnectedSubject = new BehaviorSubject<boolean>(false);
   }
 
@@ -26,25 +23,23 @@ export class BluetoothService {
 
     navigator.bluetooth.requestDevice(requestDeviceOptions)
       .then((bluetoothDevice: BluetoothDevice) => bluetoothDevice.gatt.connect())
-      .then((bleGattServer: BluetoothRemoteGATTServer) => {
-        this.bleGattServer = bleGattServer;
-        this.bleGattServerSubject.next(this.bleGattServer);
-
-        return this.bleGattServer;
-      })
+      .then((bleGattServer: BluetoothRemoteGATTServer) => this.bleGattServerSubject.next(bleGattServer))
       .then(() => this.isBluetoothDeviceConnectedSubject.next(true))
-      .catch(() => this.isBluetoothDeviceConnectedSubject.next(false));
+      .catch((error) => {
+        console.error(error);
+        this.isBluetoothDeviceConnectedSubject.next(false);
+      });
   }
 
   public disconnectFromBluetoothDevice(): void {
-    if (this.bleGattServer !== undefined) {
-      this.bleGattServer.disconnect();
-
-      this.bleGattServer = undefined;
-      this.bleGattServerSubject.next(this.bleGattServer);
-    }
-
-    this.isBluetoothDeviceConnectedSubject.next(false);
+    this.bleGattServerSubject
+      .pipe(
+        take(1),
+        tap((bleGattServer: BluetoothRemoteGATTServer) => bleGattServer.disconnect()))
+      .subscribe(() => {
+        this.bleGattServerSubject.next(undefined);
+        this.isBluetoothDeviceConnectedSubject.next(false);
+      });
   }
 
   public isBluetoothDeviceConnected(): Observable<boolean> {
