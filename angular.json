@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "AirsoftSmartMine": {
+    "airsoft-smart-mine-management-tool": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/AirsoftSmartMine",
+            "outputPath": "dist/airsoft-smart-mine-management-tool",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -62,18 +62,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "AirsoftSmartMine:build"
+            "browserTarget": "airsoft-smart-mine-management-tool:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "AirsoftSmartMine:build:production"
+              "browserTarget": "airsoft-smart-mine-management-tool:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "AirsoftSmartMine:build"
+            "browserTarget": "airsoft-smart-mine-management-tool:build"
           }
         },
         "lint": {
@@ -90,7 +90,7 @@
       }
     }
   },
-  "defaultProject": "AirsoftSmartMine",
+  "defaultProject": "airsoft-smart-mine-management-tool",
   "cli": {
     "analytics": "85667bd2-28df-4d5a-a310-812f9d290626"
   }
