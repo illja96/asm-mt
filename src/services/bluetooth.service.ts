@@ -7,12 +7,16 @@ import { BleConstants } from '../constants/ble-constants';
 
 @Injectable()
 export class BluetoothService {
-  private bleGattServerSubject: BehaviorSubject<BluetoothRemoteGATTServer>;
-  private isBluetoothDeviceConnectedSubject: BehaviorSubject<boolean>;
+  private static bleGattServerSubject: BehaviorSubject<BluetoothRemoteGATTServer>;
+  private static isBluetoothDeviceConnectedSubject: BehaviorSubject<boolean>;
 
   constructor() {
-    this.bleGattServerSubject = new BehaviorSubject<BluetoothRemoteGATTServer>(undefined);
-    this.isBluetoothDeviceConnectedSubject = new BehaviorSubject<boolean>(false);
+    if (BluetoothService.bleGattServerSubject === undefined) {
+      BluetoothService.bleGattServerSubject = new BehaviorSubject<BluetoothRemoteGATTServer>(undefined);
+    }
+    if (BluetoothService.isBluetoothDeviceConnectedSubject === undefined) {
+      BluetoothService.isBluetoothDeviceConnectedSubject = new BehaviorSubject<boolean>(false);
+    }
   }
 
   public async promptConnectToBluetoothDevice(): Promise<void> {
@@ -25,30 +29,31 @@ export class BluetoothService {
     const bleGattServer: BluetoothRemoteGATTServer = await bluetoothDevice.gatt.connect();
 
     bluetoothDevice.addEventListener('gattserverdisconnected', (event: Event) => {
-      this.bleGattServerSubject.next(undefined);
-      this.isBluetoothDeviceConnectedSubject.next(false);
+      console.error(event);
+      BluetoothService.bleGattServerSubject.next(undefined);
+      BluetoothService.isBluetoothDeviceConnectedSubject.next(false);
     });
 
-    this.bleGattServerSubject.next(bleGattServer);
-    this.isBluetoothDeviceConnectedSubject.next(true);
+    BluetoothService.bleGattServerSubject.next(bleGattServer);
+    BluetoothService.isBluetoothDeviceConnectedSubject.next(true);
   }
 
   public disconnectFromBluetoothDevice(): void {
-    this.bleGattServerSubject
+    BluetoothService.bleGattServerSubject
       .pipe(
         take(1),
         tap((bleGattServer: BluetoothRemoteGATTServer) => bleGattServer.disconnect()))
       .subscribe(() => {
-        this.bleGattServerSubject.next(undefined);
-        this.isBluetoothDeviceConnectedSubject.next(false);
+        BluetoothService.bleGattServerSubject.next(undefined);
+        BluetoothService.isBluetoothDeviceConnectedSubject.next(false);
       });
   }
 
   public isBluetoothDeviceConnected(): Observable<boolean> {
-    return this.isBluetoothDeviceConnectedSubject;
+    return BluetoothService.isBluetoothDeviceConnectedSubject;
   }
 
   public getDeviceBleGattServer(): Observable<BluetoothRemoteGATTServer> {
-    return this.bleGattServerSubject;
+    return BluetoothService.bleGattServerSubject;
   }
 }
