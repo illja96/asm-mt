@@ -1,19 +1,17 @@
-# Airsoft smart mine management tool
+# Airsoft smart mine management tool (ASMMT)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.5.
+ASMMT is a part of ASM solution. This part contains SPA front-end application written using Angular + Web Bluetooth.
 
-## Development server
+# Requirements
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Required:
 
-## Code scaffolding
+1. [ASM ESP32](https://github.com/illja96/asm-esp32)
+2. [Node.js](https://nodejs.org)
+3. [Angular CLI](https://angular.io)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+# Setup for development
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+1. Install Node.js
+2. Install Angular CLI
+3. Setup ASM ESP32
