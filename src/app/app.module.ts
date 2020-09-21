@@ -8,6 +8,7 @@ import { HomeInfoStatusComponent } from './home-info-status/home-info-status.com
 import { HomeConfigurationComponent } from './home-configuration/home-configuration.component';
 import { BluetoothService } from '../services/bluetooth.service';
 import { ConfigurationService } from '../services/configuration.service';
+import { HomeFooterComponent } from './home-footer/home-footer.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { ConfigurationService } from '../services/configuration.service';
     HomeNavComponent,
     HomeInfoComponent,
     HomeInfoStatusComponent,
-    HomeConfigurationComponent
+    HomeConfigurationComponent,
+    HomeFooterComponent
   ],
   imports: [
     BrowserModule,

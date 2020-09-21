@@ -131,10 +131,25 @@
               </div>
             </span>
 
-            <span *ngIf="configuration.RuntimeInSec !== undefined" id="runtimeInSec" class="form-control-plaintext">
-              {{ configuration.RuntimeInSec }}
-              seconds
-            </span>
+            <div *ngIf="configuration.RuntimeInSec !== undefined" id="runtimeInSec" class="form-control-plaintext">
+              <span *ngIf="configuration.RuntimeInHoursRounded <= 0 && configuration.RuntimeInMinRoundedToHour <= 0">
+                {{ configuration.RuntimeInSecRoundedToMinute }} s
+              </span>
+
+              <span *ngIf="configuration.RuntimeInHoursRounded <= 0">
+                {{ configuration.RuntimeInMinRoundedToHour }} m
+                :
+                {{ configuration.RuntimeInSecRoundedToMinute }} s
+              </span>
+
+              <span *ngIf="configuration.RuntimeInHoursRounded > 0">
+                {{ configuration.RuntimeInHoursRounded }} h
+                :
+                {{ configuration.RuntimeInMinRoundedToHour }} m
+                :
+                {{ configuration.RuntimeInSecRoundedToMinute }} s
+              </span>
+            </div>
           </div>
         </div>
 
