@@ -12,10 +12,10 @@ export class Configuration {
   }
 
   public get RuntimeInMinRoundedToHour(): number {
-    return (this.RuntimeInSec - (this.RuntimeInSec % 60)) / 60;
+    return Math.floor(this.RuntimeInSec % 3600 / 60);
   }
 
   public get RuntimeInHoursRounded(): number {
-    return (this.RuntimeInSec - (this.RuntimeInSec % 3600)) / 3600;
+    return Math.floor(this.RuntimeInSec / 3600);
   }
 }
