@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
 import { BluetoothService } from './bluetooth.service';
-import { Configuration } from '../models/configuration';
 import { BleConstants } from '../constants/ble-constants';
+import { Configuration } from '../models/configuration';
 
 @Injectable()
 export class ConfigurationService {
@@ -23,8 +22,14 @@ export class ConfigurationService {
     }
 
     this.bluetoothService.getDeviceBleGattServer()
-      .pipe(filter((bleGattServer: BluetoothRemoteGATTServer) => bleGattServer !== undefined))
-      .subscribe((bleGattServer: BluetoothRemoteGATTServer) => this.updateConfiguration(bleGattServer));
+      .subscribe((bleGattServer: BluetoothRemoteGATTServer) => {
+        if (bleGattServer !== undefined) {
+          this.updateConfiguration(bleGattServer);
+        } else {
+          ConfigurationService.batteryLevelSubject.next(undefined);
+          ConfigurationService.configurationSubject.next(undefined);
+        }
+      });
   }
 
   public getBatteryLevel(): Observable<number> {

@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10 col-8">
+    <button *ngIf="!configuration.IsExploded" [disabled]="isInitiateButtonLocked" (click)="onInitiateExplosionClick()"
+      class="btn btn-lg btn-outline-danger btn-block">
+      Initiate explosion
+    </button>
+
+    <div *ngIf="configuration.IsExploded">
+      <button class="btn btn-lg btn-danger btn-block progress-bar bg-danger progress-bar-striped progress-bar-animated"
+        disabled>
+        &nbsp;
+      </button>
+    </div>
+  </div>
+
+  <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-4">
+    <button (click)="onLockUnlockButtonClick()" class="btn btn-lg btn-outline-warning btn-block">
+      <em *ngIf="isInitiateButtonLocked" class="fas fa-lock"></em>
+      <em *ngIf="!isInitiateButtonLocked" class="fas fa-unlock"></em>
+    </button>
+  </div>
+</div>

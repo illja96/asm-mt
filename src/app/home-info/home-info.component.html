@@ -1,9 +1,11 @@
-<div>
-  <app-home-info-status [isBluetoothDeviceConnected]="isBluetoothDeviceConnected" [batteryLevel]="batteryLevel"
-    [configuration]="configuration"></app-home-info-status>
+<app-home-info-status></app-home-info-status>
 
-  <div *ngIf="isBluetoothDeviceConnected">
-    <hr>
-    <app-home-configuration [configuration]="configuration"></app-home-configuration>
-  </div>
+<div *ngIf="isManualExplosionInitialingAvailable">
+  <hr>
+  <app-home-explode></app-home-explode>
+</div>
+
+<div *ngIf="configuration !== undefined">
+  <hr>
+  <app-home-configuration></app-home-configuration>
 </div>

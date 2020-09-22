@@ -36,7 +36,7 @@
   </div>
 
   <div class="col-6 text-center">
-    <h1 *ngIf="configuration.Mode === undefined" class="text-primary">
+    <h1 *ngIf="configuration === undefined || configuration.Mode === undefined" class="text-primary">
       <div class="spinner-border" role="status">
         <span class="sr-only">
           Loading...
@@ -44,23 +44,25 @@
       </div>
     </h1>
 
-    <h1 *ngIf="configuration.Mode === 0" class="text-info">
-      <em class="fas fa-walking"></em>
-      &nbsp;
-      <em class="fab fa-bluetooth"></em>
-    </h1>
+    <div *ngIf="configuration !== undefined">
+      <h1 *ngIf="configuration.Mode === 0" class="text-info">
+        <em class="fas fa-walking"></em>
+        &nbsp;
+        <em class="fab fa-bluetooth"></em>
+      </h1>
 
-    <h1 *ngIf="configuration.Mode === 1" class="text-info">
-      <em class="fas fa-walking"></em>
-    </h1>
+      <h1 *ngIf="configuration.Mode === 1" class="text-info">
+        <em class="fas fa-walking"></em>
+      </h1>
 
-    <h1 *ngIf="configuration.Mode === 2" class="text-info">
-      <em class="fab fa-bluetooth"></em>
-    </h1>
+      <h1 *ngIf="configuration.Mode === 2" class="text-info">
+        <em class="fab fa-bluetooth"></em>
+      </h1>
+    </div>
   </div>
 
   <div class="col-6 text-center">
-    <h1 *ngIf="configuration.IsExploded === undefined" class="text-primary">
+    <h1 *ngIf="configuration === undefined || configuration.IsExploded === undefined" class="text-primary">
       <div class="spinner-border" role="status">
         <span class="sr-only">
           Loading...
@@ -68,12 +70,14 @@
       </div>
     </h1>
 
-    <h1 *ngIf="configuration.IsExploded === false" class="text-success">
-      <em class="fas fa-bomb"></em>
-    </h1>
+    <div *ngIf="configuration !== undefined">
+      <h1 *ngIf="configuration.IsExploded === false" class="text-success">
+        <em class="fas fa-bomb"></em>
+      </h1>
 
-    <h1 *ngIf="configuration.IsExploded === true" class="text-danger">
-      <em class="fas fa-user-injured"></em>
-    </h1>
+      <h1 *ngIf="configuration.IsExploded === true" class="text-danger">
+        <em class="fas fa-user-injured"></em>
+      </h1>
+    </div>
   </div>
 </div>
