@@ -2,7 +2,7 @@
   "short_name": "ASMMT",
   "name": "Airsoft Smart Mine Management Tool",
   "theme_color": "#303030",
-  "background_color": "#222",
+  "background_color": "#222222",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
