@@ -14,7 +14,19 @@ export class HomeNavComponent {
       .subscribe((isBluetoothDeviceConnected) => this.isBluetoothDeviceConnected = isBluetoothDeviceConnected);
   }
 
-  public onConnectBluetoothClick(): void {
+  public async onConnectBluetoothClick(): Promise<void> {
+    if (!('Notification' in window)) {
+      alert('Your browser doesn\'t support desktop notification. Please, consider using another browser');
+    }
+
+    const notificationPermission: NotificationPermission = await Notification.requestPermission();
+    switch (notificationPermission) {
+      case 'default':
+      case 'denied':
+        alert('Notifications is required to get explode and battery level status notifications');
+        return;
+    }
+
     this.bluetoothService.promptConnectToBluetoothDevice();
   }
 
