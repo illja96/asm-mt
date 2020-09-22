@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeNavComponent } from './home-nav/home-nav.component';
@@ -9,6 +10,7 @@ import { HomeConfigurationComponent } from './home-configuration/home-configurat
 import { BluetoothService } from '../services/bluetooth.service';
 import { ConfigurationService } from '../services/configuration.service';
 import { HomeFooterComponent } from './home-footer/home-footer.component';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { HomeFooterComponent } from './home-footer/home-footer.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     BluetoothService,

@@ -39,7 +39,7 @@ export class AppComponent {
           const notificationOptions: NotificationOptions = {
             icon: notificationIconUrl,
             vibrate: notificationVibratePattern,
-            body: `Battery level is ${batteryLevel}`
+            body: `Battery level is ${batteryLevel}%`
           };
           const notification: Notification = new Notification('ASMMT', notificationOptions);
         }
