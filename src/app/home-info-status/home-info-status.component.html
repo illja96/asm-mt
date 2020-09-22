@@ -1,7 +1,7 @@
 <div *ngIf="!isBluetoothDeviceConnected" class="row">
   <div class="col-12 text-center">
     <h1>
-      <i class="fas fa-skull-crossbones"></i>
+      <em class="fas fa-skull-crossbones"></em>
       <br> <br>
       NO CONNECTION
     </h1>
@@ -16,22 +16,22 @@
           Loading...
         </span>
       </div>
-      <i class="fas fa-battery-empty"></i>
+      <em class="fas fa-battery-empty"></em>
     </h1>
 
     <h1 *ngIf="batteryLevel >= 50" class="text-success">
       {{ batteryLevel }} %
-      <i class="fas fa-battery-full"></i>
+      <em class="fas fa-battery-full"></em>
     </h1>
 
     <h1 *ngIf="batteryLevel >= 15 && batteryLevel < 50" class="text-warning">
       {{ batteryLevel }} %
-      <i class="fas fa-battery-half"></i>
+      <em class="fas fa-battery-half"></em>
     </h1>
 
     <h1 *ngIf="batteryLevel < 15" class="text-danger">
       {{ batteryLevel }} %
-      <i class="fas fa-battery-quarter"></i>
+      <em class="fas fa-battery-quarter"></em>
     </h1>
   </div>
 
@@ -45,17 +45,17 @@
     </h1>
 
     <h1 *ngIf="configuration.Mode === 0" class="text-info">
-      <i class="fas fa-walking"></i>
+      <em class="fas fa-walking"></em>
       &nbsp;
-      <i class="fab fa-bluetooth"></i>
+      <em class="fab fa-bluetooth"></em>
     </h1>
 
     <h1 *ngIf="configuration.Mode === 1" class="text-info">
-      <i class="fas fa-walking"></i>
+      <em class="fas fa-walking"></em>
     </h1>
 
     <h1 *ngIf="configuration.Mode === 2" class="text-info">
-      <i class="fab fa-bluetooth"></i>
+      <em class="fab fa-bluetooth"></em>
     </h1>
   </div>
 
@@ -69,11 +69,11 @@
     </h1>
 
     <h1 *ngIf="configuration.IsExploded === false" class="text-success">
-      <i class="fas fa-bomb"></i>
+      <em class="fas fa-bomb"></em>
     </h1>
 
     <h1 *ngIf="configuration.IsExploded === true" class="text-danger">
-      <i class="fas fa-user-injured"></i>
+      <em class="fas fa-user-injured"></em>
     </h1>
   </div>
 </div>

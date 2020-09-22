@@ -7,6 +7,10 @@
   <div class="card card-body">
     <form>
       <fieldset>
+        <legend>
+          Configuration
+        </legend>
+
         <div class="form-group row">
           <label for="mode" class="col-4 col-form-label">
             Mode:
@@ -22,17 +26,17 @@
             </span>
 
             <span *ngIf="configuration.Mode === 0" class="form-control-plaintext">
-              <i class="fas fa-walking"></i>
+              <em class="fas fa-walking"></em>
               &nbsp;
-              <i class="fab fa-bluetooth"></i>
+              <em class="fab fa-bluetooth"></em>
             </span>
 
             <span *ngIf="configuration.Mode === 1" class="form-control-plaintext">
-              <i class="fas fa-walking"></i>
+              <em class="fas fa-walking"></em>
             </span>
 
             <span *ngIf="configuration.Mode === 2" class="form-control-plaintext">
-              <i class="fab fa-bluetooth"></i>
+              <em class="fab fa-bluetooth"></em>
             </span>
           </div>
 

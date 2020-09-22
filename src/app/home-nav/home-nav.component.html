@@ -1,6 +1,6 @@
 <nav role="navigation" class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
   <a class="navbar-brand">
-    <i class="fas fa-bomb"></i>
+    <em class="fas fa-bomb"></em>
     ASMMT
   </a>
 
@@ -8,13 +8,13 @@
     <button type="button" *ngIf="!isBluetoothDeviceConnected" (click)="onConnectBluetoothClick()"
       class="btn btn-outline-info">
       Connect
-      <i class="fab fa-bluetooth-b"></i>
+      <em class="fab fa-bluetooth-b"></em>
     </button>
 
     <button type="button" *ngIf="isBluetoothDeviceConnected" (click)="onDisconnectBluetoothClick()"
       class="btn btn-outline-warning">
       Disconnect
-      <i class="fab fa-bluetooth-b"></i>
+      <em class="fab fa-bluetooth-b"></em>
     </button>
   </ul>
 </nav>
