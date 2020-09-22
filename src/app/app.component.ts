@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { filter } from 'rxjs/operators';
 import { BluetoothService } from 'src/services/bluetooth.service';
 import { ConfigurationService } from 'src/services/configuration.service';
-import { Configuration } from 'src/models/configuration';
+import { NotificationsService } from 'src/services/notifications.service';
+import { Configuration } from 'src/models/configuration'; 
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,8 @@ export class AppComponent {
 
   constructor(
     private readonly bluetoothService: BluetoothService,
-    private readonly configurationService: ConfigurationService) {
+    private readonly configurationService: ConfigurationService,
+    private readonly notificationService: NotificationsService) {
     this.isBluetoothDeviceConnected = false;
     this.batteryLevel = undefined;
     this.isExploded = undefined;
@@ -25,6 +27,7 @@ export class AppComponent {
     this.bluetoothService.isBluetoothDeviceConnected()
       .subscribe((isBluetoothDeviceConnected: boolean) => this.isBluetoothDeviceConnected = isBluetoothDeviceConnected);
 
+    const notificationTitle: string = 'ASMMT';
     const notificationIconUrl: string = 'favicon.ico';
     const notificationVibratePattern: VibratePattern = [100, 50, 100, 50, 100, 50, 100, 50, 100];
 
@@ -41,7 +44,8 @@ export class AppComponent {
             vibrate: notificationVibratePattern,
             body: `Battery level is ${batteryLevel}%`
           };
-          const notification: Notification = new Notification('ASMMT', notificationOptions);
+
+          this.notificationService.showNotification(notificationTitle, notificationOptions);
         }
 
         this.batteryLevel = batteryLevel;
@@ -56,7 +60,9 @@ export class AppComponent {
             vibrate: notificationVibratePattern,
             body: `Mine exploded`
           };
-          const notification: Notification = new Notification('ASMMT', notificationOptions);
+          const notification: Notification = new Notification(notificationTitle, notificationOptions);
+
+          this.notificationService.showNotification(notificationTitle, notificationOptions);
         }
 
         this.isExploded = configuration.IsExploded;

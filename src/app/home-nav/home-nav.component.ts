@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { BluetoothService } from '../../services/bluetooth.service';
 
 @Component({

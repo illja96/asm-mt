@@ -7,9 +7,10 @@ import { HomeNavComponent } from './home-nav/home-nav.component';
 import { HomeInfoComponent } from './home-info/home-info.component';
 import { HomeInfoStatusComponent } from './home-info-status/home-info-status.component';
 import { HomeConfigurationComponent } from './home-configuration/home-configuration.component';
+import { HomeFooterComponent } from './home-footer/home-footer.component';
 import { BluetoothService } from '../services/bluetooth.service';
 import { ConfigurationService } from '../services/configuration.service';
-import { HomeFooterComponent } from './home-footer/home-footer.component';
+import { NotificationsService } from '../services/notifications.service';
 import { environment } from '../environments/environment';
 
 @NgModule({
@@ -28,7 +29,8 @@ import { environment } from '../environments/environment';
   ],
   providers: [
     BluetoothService,
-    ConfigurationService
+    ConfigurationService,
+    NotificationsService
   ],
   bootstrap: [AppComponent]
 })
