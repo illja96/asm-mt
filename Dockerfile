@@ -5,7 +5,7 @@ RUN test -n "${BUILD_NUMBER}" || (echo "BUILD_NUMBER argument not provided" && f
 
 WORKDIR /app
 COPY . ./
-RUN npm version "1.0.${BUILD_NUMBER}" --no-git-tag-version
+RUN npm version "${BUILD_NUMBER}" --no-git-tag-version
 RUN npm install
 RUN npm run ng build -- -c=production
 
