@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ConfigurationService } from 'src/services/configuration.service';
+import { BleConfigurationService } from 'src/services/ble-configuration.service';
 import { Configuration } from 'src/models/configuration';
 
 @Component({
@@ -11,16 +11,16 @@ export class HomeExplodeComponent {
   public configuration: Configuration;
   public isInitiateButtonLocked: boolean;
 
-  constructor(private readonly configurationService: ConfigurationService) {
+  constructor(private readonly bleConfigurationService: BleConfigurationService) {
     this.configuration = undefined;
     this.isInitiateButtonLocked = true;
 
-    this.configurationService.getConfiguration()
+    this.bleConfigurationService.getConfiguration()
       .subscribe((configuration: Configuration) => this.configuration = configuration);
   }
 
-  public onInitiateExplosionClick(): void {
-    this.configurationService.initiateExplosionViaBle();
+  public async onInitiateExplosionClick(): Promise<void> {
+    await this.bleConfigurationService.setIsForceExplodeViaBleInitiated();
   }
 
   public onLockUnlockButtonClick(): void {

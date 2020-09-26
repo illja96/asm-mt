@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { ConfigurationService } from 'src/services/configuration.service';
+import { FormGroup, FormControl, AbstractControl, Validators } from '@angular/forms';
+import { filter } from 'rxjs/operators';
+import { BleConfigurationService } from 'src/services/ble-configuration.service';
 import { Configuration } from 'src/models/configuration';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Mode } from 'src/models/mode';
 
 @Component({
@@ -36,7 +37,7 @@ export class HomeConfigurationComponent {
     return this.configurationForm.controls.explodeDurationInMs;
   }
 
-  constructor(private readonly configurationService: ConfigurationService) {
+  constructor(private readonly bleConfigurationService: BleConfigurationService) {
     this.configurationForm = new FormGroup({
       version: new FormControl(undefined),
       runtimeInSec: new FormControl(undefined),
@@ -45,45 +46,50 @@ export class HomeConfigurationComponent {
       explodeDurationInMs: new FormControl(undefined, [Validators.required, Validators.min(0), Validators.max(60000)]),
     });
 
-    this.configurationForm.controls.runtimeInSec.valueChanges
-      .subscribe((runtimeInSec: number) => {
-        this.runtimeInSecRoundedToMinute = runtimeInSec % 60;
-        this.runtimeInMinRoundedToHour = Math.floor(runtimeInSec % 3600 / 60);
-        this.runtimeInHoursRounded = Math.floor(runtimeInSec / 3600);
-      });
-
     this.modeOptions = [
       { value: Mode.Any, text: 'Sensor + BLE' },
       { value: Mode.SensorOnly, text: 'Sensor only' },
       { value: Mode.BleOnly, text: 'BLE only' }
     ];
 
-    this.configurationService.getConfiguration()
+    this.bleConfigurationService.getConfiguration()
+      .pipe(filter((configuration: Configuration) => configuration !== undefined))
       .subscribe((configuration: Configuration) => {
-        if (this.configurationForm.controls.version.value === undefined || !this.configurationForm.controls.version.touched) {
-          this.configurationForm.controls.version.setValue(configuration.version);
-        }
-
-        if (this.configurationForm.controls.runtimeInSec.value === undefined || !this.configurationForm.controls.runtimeInSec.touched) {
-          this.configurationForm.controls.runtimeInSec.setValue(configuration.runtimeInSec);
-        }
-
-        if (this.configurationForm.controls.mode.value === undefined || !this.configurationForm.controls.mode.touched) {
-          this.configurationForm.controls.mode.setValue(configuration.mode);
-        }
-
-        if (this.configurationForm.controls.isExploded.value === undefined || !this.configurationForm.controls.isExploded.touched) {
-          this.configurationForm.controls.isExploded.setValue(configuration.isExploded);
-        }
-
-        if (this.configurationForm.controls.explodeDurationInMs.value === undefined || !this.configurationForm.controls.explodeDurationInMs.touched) {
-          this.configurationForm.controls.explodeDurationInMs.setValue(configuration.explodeDurationInMs);
-        }
+        this.updateFormValuesIfPristine(configuration);
+        this.updateRoundedRuntimeValues(configuration);
       });
   }
 
   public onConfigurationFormSubmit(): void {
     const configuration = this.configurationForm.value as Configuration;
-    this.configurationService.setConfiguration(configuration);
+    this.bleConfigurationService.setConfiguration(configuration);
+  }
+
+  private updateRoundedRuntimeValues(configuration: Configuration): void {
+    this.runtimeInSecRoundedToMinute = configuration.runtimeInSec % 60;
+    this.runtimeInMinRoundedToHour = Math.floor(configuration.runtimeInSec % 3600 / 60);
+    this.runtimeInHoursRounded = Math.floor(configuration.runtimeInSec / 3600);
+  }
+
+  private updateFormValuesIfPristine(configuration: Configuration): void {
+    if (this.configurationForm.controls.version.pristine) {
+      this.configurationForm.controls.version.setValue(configuration.version);
+    }
+
+    if (this.configurationForm.controls.runtimeInSec.pristine) {
+      this.configurationForm.controls.runtimeInSec.setValue(configuration.runtimeInSec);
+    }
+
+    if (this.configurationForm.controls.mode.pristine) {
+      this.configurationForm.controls.mode.setValue(configuration.mode);
+    }
+
+    if (this.configurationForm.controls.isExploded.pristine) {
+      this.configurationForm.controls.isExploded.setValue(configuration.isExploded);
+    }
+
+    if (this.configurationForm.controls.explodeDurationInMs.pristine) {
+      this.configurationForm.controls.explodeDurationInMs.setValue(configuration.explodeDurationInMs);
+    }
   }
 }

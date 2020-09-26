@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { BluetoothService } from '../../services/bluetooth.service';
 
 @Component({
@@ -28,7 +27,7 @@ export class HomeNavComponent {
         return;
     }
 
-    this.bluetoothService.promptConnectToBluetoothDevice();
+    await this.bluetoothService.promptConnectToBluetoothDevice();
   }
 
   public onDisconnectBluetoothClick(): void {

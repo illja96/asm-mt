@@ -16,7 +16,6 @@
           Loading...
         </span>
       </div>
-      <em class="fas fa-battery-empty"></em>
     </h1>
 
     <h1 *ngIf="batteryLevel >= 50" class="text-success">
@@ -44,21 +43,19 @@
       </div>
     </h1>
 
-    <div *ngIf="configuration !== undefined">
-      <h1 *ngIf="configuration.mode === 0" class="text-info">
-        <em class="fas fa-walking"></em>
-        &nbsp;
-        <em class="fab fa-bluetooth"></em>
-      </h1>
+    <h1 *ngIf="configuration !== undefined && configuration.mode === 0" class="text-info">
+      <em class="fas fa-walking"></em>
+      &nbsp;
+      <em class="fab fa-bluetooth"></em>
+    </h1>
 
-      <h1 *ngIf="configuration.mode === 1" class="text-info">
-        <em class="fas fa-walking"></em>
-      </h1>
+    <h1 *ngIf="configuration !== undefined && configuration.mode === 1" class="text-info">
+      <em class="fas fa-walking"></em>
+    </h1>
 
-      <h1 *ngIf="configuration.mode === 2" class="text-info">
-        <em class="fab fa-bluetooth"></em>
-      </h1>
-    </div>
+    <h1 *ngIf="configuration !== undefined && configuration.mode === 2" class="text-info">
+      <em class="fab fa-bluetooth"></em>
+    </h1>
   </div>
 
   <div class="col-6 text-center">
@@ -70,14 +67,12 @@
       </div>
     </h1>
 
-    <div *ngIf="configuration !== undefined">
-      <h1 *ngIf="configuration.isExploded === false" class="text-success">
-        <em class="fas fa-bomb"></em>
-      </h1>
+    <h1 *ngIf="configuration !== undefined && configuration.isExploded === false" class="text-success">
+      <em class="fas fa-bomb"></em>
+    </h1>
 
-      <h1 *ngIf="configuration.isExploded === true" class="text-danger">
-        <em class="fas fa-user-injured"></em>
-      </h1>
-    </div>
+    <h1 *ngIf="configuration !== undefined && configuration.isExploded === true" class="text-danger">
+      <em class="fas fa-user-injured"></em>
+    </h1>
   </div>
 </div>

@@ -16,15 +16,17 @@
             Mode:
           </label>
 
-          <div class="col-6">
-            <span *ngIf="mode.value === undefined" class="form-control-plaintext">
+          <div *ngIf="mode.value == undefined" class="col-6">
+            <span class="form-control-plaintext">
               <div class="spinner-border spinner-border-sm" role="status">
                 <span class="sr-only">
                   Loading...
                 </span>
               </div>
             </span>
+          </div>
 
+          <div *ngIf="mode.value != undefined" class="col-6">
             <span *ngIf="mode.value == modeOptions[0].value" class="form-control-plaintext">
               <em class="fas fa-walking"></em>
               &nbsp;
@@ -40,7 +42,7 @@
             </span>
           </div>
 
-          <div class="col-12">
+          <div *ngIf="mode.value != undefined" class="col-12">
             <select id="mode" required formControlName="mode" class="form-control">
               <option *ngFor="let modeOption of modeOptions" [value]="modeOption.value">
                 {{ modeOption.text }}
@@ -54,22 +56,22 @@
             Explode duration:
           </label>
 
-          <div class="col-6">
-            <span *ngIf="explodeDurationInMs === undefined">
-              <div class="spinner-border spinner-border-sm" role="status">
-                <span class="sr-only">
-                  Loading...
-                </span>
-              </div>
-            </span>
+          <div *ngIf="explodeDurationInMs.value == undefined" class="col-6">
+            <div class="spinner-border spinner-border-sm" role="status">
+              <span class="sr-only">
+                Loading...
+              </span>
+            </div>
+          </div>
 
-            <span *ngIf="explodeDurationInMs.value !== undefined" class="form-control-plaintext">
+          <div *ngIf="explodeDurationInMs.value != undefined" class="col-6">
+            <span class="form-control-plaintext">
               {{ explodeDurationInMs.value }}
               milliseconds
             </span>
           </div>
 
-          <div *ngIf="explodeDurationInMs.value !== undefined" class="col-12">
+          <div *ngIf="explodeDurationInMs.value != undefined" class="col-12">
             <input id="explodeDurationInMs" type="range" required min="1" max="60000"
               formControlName="explodeDurationInMs" class="custom-range">
           </div>
@@ -80,16 +82,16 @@
             Is exploded:
           </label>
 
-          <div class="col-6">
-            <span *ngIf="isExploded.value === undefined">
-              <div class="spinner-border spinner-border-sm" role="status">
-                <span class="sr-only">
-                  Loading...
-                </span>
-              </div>
-            </span>
+          <div *ngIf="isExploded.value == undefined" class="col-6">
+            <div class="spinner-border spinner-border-sm" role="status">
+              <span class="sr-only">
+                Loading...
+              </span>
+            </div>
+          </div>
 
-            <span *ngIf="isExploded.value !== undefined" class="form-control-plaintext">
+          <div *ngIf="isExploded.value != undefined" class="col-6">
+            <span class="form-control-plaintext">
               {{ isExploded.value }}
             </span>
           </div>
@@ -100,16 +102,16 @@
             Version:
           </label>
 
-          <div class="col-6">
-            <span *ngIf="version.value === undefined">
-              <div class="spinner-border spinner-border-sm" role="status">
-                <span class="sr-only">
-                  Loading...
-                </span>
-              </div>
-            </span>
+          <div *ngIf="version.value == undefined" class="col-6">
+            <div class="spinner-border spinner-border-sm" role="status">
+              <span class="sr-only">
+                Loading...
+              </span>
+            </div>
+          </div>
 
-            <span *ngIf="version.value !== undefined" id="version" class="form-control-plaintext">
+          <div *ngIf="version.value != undefined" class="col-6">
+            <span id="version" class="form-control-plaintext">
               {{ version.value }}
             </span>
           </div>
@@ -120,21 +122,21 @@
             Runtime:
           </label>
 
-          <div class="col-6">
-            <span *ngIf="runtimeInSec.value === undefined">
-              <div class="spinner-border spinner-border-sm" role="status">
-                <span class="sr-only">
-                  Loading...
-                </span>
-              </div>
-            </span>
+          <div *ngIf="runtimeInSec.value == undefined" class="col-6">
+            <div class="spinner-border spinner-border-sm" role="status">
+              <span class="sr-only">
+                Loading...
+              </span>
+            </div>
+          </div>
 
-            <div *ngIf="runtimeInSec.value !== undefined" id="runtimeInSec" class="form-control-plaintext">
+          <div *ngIf="runtimeInSec.value != undefined" class="col-6">
+            <div id="runtimeInSec" class="form-control-plaintext">
               <span *ngIf="runtimeInSec.value < 60">
                 {{ runtimeInSecRoundedToMinute }} s
               </span>
 
-              <span *ngIf="runtimeInSec.value >= 60">
+              <span *ngIf="runtimeInSec.value >= 60 && runtimeInSec.value < 3600">
                 {{ runtimeInMinRoundedToHour }} m
                 :
                 {{ runtimeInSecRoundedToMinute }} s

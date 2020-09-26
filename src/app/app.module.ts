@@ -10,8 +10,9 @@ import { HomeConfigurationComponent } from './home-configuration/home-configurat
 import { HomeInfoComponent } from './home-info/home-info.component';
 import { HomeInfoStatusComponent } from './home-info-status/home-info-status.component';
 import { HomeNavComponent } from './home-nav/home-nav.component';
+import { BleBatteryService } from '../services/ble-battery.service';
+import { BleConfigurationService } from '../services/ble-configuration.service';
 import { BluetoothService } from '../services/bluetooth.service';
-import { ConfigurationService } from '../services/configuration.service';
 import { NotificationsService } from '../services/notifications.service';
 import { environment } from '../environments/environment';
 
@@ -32,8 +33,9 @@ import { environment } from '../environments/environment';
     AppRoutingModule
   ],
   providers: [
+    BleBatteryService,
+    BleConfigurationService,
     BluetoothService,
-    ConfigurationService,
     NotificationsService
   ],
   bootstrap: [AppComponent]
