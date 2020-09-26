@@ -15,10 +15,10 @@ export class HomeInfoComponent {
   public configuration: Configuration;
 
   public get isManualExplosionInitialingAvailable(): boolean {
-    if (this.configuration === undefined || this.configuration.Mode === undefined) {
+    if (this.configuration === undefined || this.configuration.mode === undefined) {
       return false;
     } else {
-      return this.configuration.Mode === Mode.Any || this.configuration.Mode === Mode.BleOnly;
+      return this.configuration.mode === Mode.Any || this.configuration.mode === Mode.BleOnly;
     }
   }
 

@@ -20,7 +20,7 @@ export class HomeExplodeComponent {
   }
 
   public onInitiateExplosionClick(): void {
-    alert('Boom!');
+    this.configurationService.initiateExplosionViaBle();
   }
 
   public onLockUnlockButtonClick(): void {

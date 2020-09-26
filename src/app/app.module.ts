@@ -1,5 +1,6 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,12 +23,13 @@ import { environment } from '../environments/environment';
     HomeFooterComponent,
     HomeInfoComponent,
     HomeInfoStatusComponent,
-    HomeNavComponent  
+    HomeNavComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ReactiveFormsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    AppRoutingModule
   ],
   providers: [
     BluetoothService,

@@ -1,11 +1,11 @@
 <div class="row">
   <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10 col-8">
-    <button *ngIf="!configuration.IsExploded" [disabled]="isInitiateButtonLocked" (click)="onInitiateExplosionClick()"
+    <button *ngIf="!configuration.isExploded" [disabled]="isInitiateButtonLocked" (click)="onInitiateExplosionClick()"
       class="btn btn-lg btn-outline-danger btn-block">
       Initiate explosion
     </button>
 
-    <div *ngIf="configuration.IsExploded">
+    <div *ngIf="configuration.isExploded">
       <button class="btn btn-lg btn-danger btn-block progress-bar bg-danger progress-bar-striped progress-bar-animated"
         disabled>
         &nbsp;

@@ -54,7 +54,7 @@ export class AppComponent {
     this.configurationService.getConfiguration()
       .pipe(filter((configuration: Configuration) => configuration !== undefined))
       .subscribe((configuration: Configuration) => {
-        if (configuration.IsExploded && !this.isExploded) {
+        if (configuration.isExploded && !this.isExploded) {
           const notificationOptions: NotificationOptions = {
             icon: notificationIconUrl,
             vibrate: notificationVibratePattern,
@@ -65,7 +65,7 @@ export class AppComponent {
           this.notificationService.showNotification(notificationTitle, notificationOptions);
         }
 
-        this.isExploded = configuration.IsExploded;
+        this.isExploded = configuration.isExploded;
       });
   }
 }

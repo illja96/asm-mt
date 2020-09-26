@@ -3,32 +3,31 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { BluetoothService } from './bluetooth.service';
 import { BleConstants } from '../constants/ble-constants';
 import { Configuration } from '../models/configuration';
+import { filter, take } from 'rxjs/operators';
 
 @Injectable()
 export class ConfigurationService {
-  private static batteryLevelSubject: BehaviorSubject<number>;
-  private static configurationSubject: BehaviorSubject<Configuration>;
-  private static decoder: TextDecoder;
+  private static batteryLevelSubject: BehaviorSubject<number> = new BehaviorSubject<number>(undefined);
+  private static configurationSubject: BehaviorSubject<Configuration> = new BehaviorSubject<Configuration>(undefined);
+  private static decoder: TextDecoder = new TextDecoder('utf-8');
+  private static encoder: TextEncoder = new TextEncoder();
 
   constructor(private readonly bluetoothService: BluetoothService) {
-    if (ConfigurationService.batteryLevelSubject === undefined) {
-      ConfigurationService.batteryLevelSubject = new BehaviorSubject<number>(undefined);
-    }
-    if (ConfigurationService.configurationSubject === undefined) {
-      ConfigurationService.configurationSubject = new BehaviorSubject<Configuration>(undefined);
-    }
-    if (ConfigurationService.decoder === undefined) {
-      ConfigurationService.decoder = new TextDecoder('utf-8');
-    }
+    this.bluetoothService.getDeviceBleGattServer()
+      .pipe(filter((bleGattServer: BluetoothRemoteGATTServer) => bleGattServer !== undefined))
+      .subscribe(async (bleGattServer: BluetoothRemoteGATTServer) => {
+        this.updateBatteryLevelSubject(bleGattServer);
+        this.subscribeToBatteryLevelChangesViaNotifications(bleGattServer);
+
+        const configuration: Configuration = await this.updateConfigurationSubject(bleGattServer);
+        this.subscribeToConfigurationChangesViaNotifications(bleGattServer, configuration);
+      });
 
     this.bluetoothService.getDeviceBleGattServer()
-      .subscribe((bleGattServer: BluetoothRemoteGATTServer) => {
-        if (bleGattServer !== undefined) {
-          this.updateConfiguration(bleGattServer);
-        } else {
-          ConfigurationService.batteryLevelSubject.next(undefined);
-          ConfigurationService.configurationSubject.next(undefined);
-        }
+      .pipe(filter((bleGattServer: BluetoothRemoteGATTServer) => bleGattServer === undefined))
+      .subscribe(() => {
+        ConfigurationService.batteryLevelSubject.next(undefined);
+        ConfigurationService.configurationSubject.next(undefined);
       });
   }
 
@@ -40,70 +39,101 @@ export class ConfigurationService {
     return ConfigurationService.configurationSubject;
   }
 
-  private async updateConfiguration(bleGattServer: BluetoothRemoteGATTServer): Promise<void> {
+  public setConfiguration(configuration: Configuration): void {
+    const modeValue: string = (configuration.mode as number).toString();
+    const modeCharacteristicEncodedValue: Uint8Array = ConfigurationService.encoder.encode(modeValue);
+
+    const explodeDurationInMsCharacteristicValue: string = configuration.explodeDurationInMs.toString();
+    const explodeDurationInMsCharacteristicEncodedValue: Uint8Array = ConfigurationService.encoder.encode(explodeDurationInMsCharacteristicValue);
+
+    this.bluetoothService.getDeviceBleGattServer()
+      .pipe(
+        take(1))
+      .subscribe(async (bleGattServer: BluetoothRemoteGATTServer) => {
+        const customService: BluetoothRemoteGATTService = await bleGattServer.getPrimaryService(BleConstants.CustomService.UUID);
+
+        const modeCharacteristic: BluetoothRemoteGATTCharacteristic = await customService.getCharacteristic(BleConstants.CustomService.Characteristics.Mode);
+        await modeCharacteristic.writeValue(modeCharacteristicEncodedValue);
+
+        const explodeDurationInMsCharacteristic: BluetoothRemoteGATTCharacteristic = await customService.getCharacteristic(BleConstants.CustomService.Characteristics.ExplodeDurationInMs);
+        await explodeDurationInMsCharacteristic.writeValue(explodeDurationInMsCharacteristicEncodedValue);
+      });
+  }
+
+  public initiateExplosionViaBle(): void {
+    this.bluetoothService.getDeviceBleGattServer()
+      .pipe(take(1))
+      .subscribe(async (bleGattServer: BluetoothRemoteGATTServer) => {
+        const customService: BluetoothRemoteGATTService = await bleGattServer.getPrimaryService(BleConstants.CustomService.UUID);
+
+        const isForceExplodeViaBleInitiatedCharacteristic: BluetoothRemoteGATTCharacteristic = await customService.getCharacteristic(BleConstants.CustomService.Characteristics.IsForceExplodeViaBleInitiated);
+        const isForceExplodeViaBleInitiatedCharacteristicValue: string = '1';
+        const isForceExplodeViaBleInitiatedCharacteristicEncodedValue: Uint8Array = ConfigurationService.encoder.encode(isForceExplodeViaBleInitiatedCharacteristicValue);
+        await isForceExplodeViaBleInitiatedCharacteristic.writeValue(isForceExplodeViaBleInitiatedCharacteristicEncodedValue);
+      });
+  }
+
+  private async updateBatteryLevelSubject(bleGattServer: BluetoothRemoteGATTServer): Promise<void> {
+    const batteryService: BluetoothRemoteGATTService = await bleGattServer.getPrimaryService(BleConstants.BatteryService.UUID);
+    const batteryCharacteristicValue: number = await this.parseCharacteristicByteValueAsNumber(batteryService, BleConstants.BatteryService.Characteristics.BatteryLevel);
+    ConfigurationService.batteryLevelSubject.next(batteryCharacteristicValue);
+  }
+
+  private async subscribeToBatteryLevelChangesViaNotifications(bleGattServer: BluetoothRemoteGATTServer): Promise<void> {
     const characteristicValueChangedEventName: string = 'characteristicvaluechanged';
 
     const batteryService: BluetoothRemoteGATTService = await bleGattServer.getPrimaryService(BleConstants.BatteryService.UUID);
-    const batteryCharacteristic: BluetoothRemoteGATTCharacteristic = await batteryService.getCharacteristic(BleConstants.BatteryService.Characteristics.BatteryLevel);
-    const batteryCharacteristicRawValue: DataView = await batteryCharacteristic.readValue();
-    const batteryCharacteristicValue: number = batteryCharacteristicRawValue.getUint8(0);
-    ConfigurationService.batteryLevelSubject.next(batteryCharacteristicValue);
 
+    const batteryCharacteristic: BluetoothRemoteGATTCharacteristic = await batteryService.getCharacteristic(BleConstants.BatteryService.Characteristics.BatteryLevel);
     batteryCharacteristic.addEventListener(characteristicValueChangedEventName, async (event) => {
-      const batteryCharacteristicNotificationValue = await this.parseCharacteristicNotificationByteValueAsNumber(event);
-      ConfigurationService.batteryLevelSubject.next(batteryCharacteristicNotificationValue);
-      return true;
+      const batteryCharacteristicValue: number = await this.parseCharacteristicNotificationByteValueAsNumber(event);
+      ConfigurationService.batteryLevelSubject.next(batteryCharacteristicValue);
     });
     await batteryCharacteristic.startNotifications();
+  }
 
+  private async updateConfigurationSubject(bleGattServer: BluetoothRemoteGATTServer): Promise<Configuration> {
     const configuration: Configuration = new Configuration();
     const customService: BluetoothRemoteGATTService = await bleGattServer.getPrimaryService(BleConstants.CustomService.UUID);
 
-    const versionCharacteristic: BluetoothRemoteGATTCharacteristic = await customService.getCharacteristic(BleConstants.CustomService.Characteristics.Version);
-    const versionCharacteristicRawValue: DataView = await versionCharacteristic.readValue();
-    const versionCharacteristicDecodedValue: string = ConfigurationService.decoder.decode(versionCharacteristicRawValue);
-    const versionCharacteristicValue: number = parseInt(versionCharacteristicDecodedValue);
-    configuration.Version = versionCharacteristicValue;
+    const versionCharacteristicValue: number = await this.parseCharacteristicStringAsNumber(customService, BleConstants.CustomService.Characteristics.Version);
+    configuration.version = versionCharacteristicValue;
+
+    const runtimeInSecCharacteristicValue: number = await this.parseCharacteristicStringAsNumber(customService, BleConstants.CustomService.Characteristics.RuntimeInSec);
+    configuration.runtimeInSec = runtimeInSecCharacteristicValue;
+
+    const modeCharacteristicValue: number = await this.parseCharacteristicStringAsNumber(customService, BleConstants.CustomService.Characteristics.Mode);
+    configuration.mode = modeCharacteristicValue;
+
+    const isExplodedCharacteristicValue: number = await this.parseCharacteristicStringAsNumber(customService, BleConstants.CustomService.Characteristics.IsExploded);
+    configuration.isExploded = !!isExplodedCharacteristicValue;
+
+    const explodeDurationInMsCharacteristicValue: number = await this.parseCharacteristicStringAsNumber(customService, BleConstants.CustomService.Characteristics.ExplodeDurationInMs);
+    configuration.explodeDurationInMs = explodeDurationInMsCharacteristicValue;
+
+    ConfigurationService.configurationSubject.next(configuration);
+
+    return configuration;
+  }
+
+  private async subscribeToConfigurationChangesViaNotifications(bleGattServer: BluetoothRemoteGATTServer, configuration: Configuration): Promise<void> {
+    const characteristicValueChangedEventName: string = 'characteristicvaluechanged';
+
+    const customService: BluetoothRemoteGATTService = await bleGattServer.getPrimaryService(BleConstants.CustomService.UUID);
 
     const runtimeInSecCharacteristic: BluetoothRemoteGATTCharacteristic = await customService.getCharacteristic(BleConstants.CustomService.Characteristics.RuntimeInSec);
-    const runtimeInSecCharacteristicRawValue: DataView = await runtimeInSecCharacteristic.readValue();
-    const runtimeInSecCharacteristicDecodedValue: string = ConfigurationService.decoder.decode(runtimeInSecCharacteristicRawValue);
-    const runtimeInSecCharacteristicValue: number = parseInt(runtimeInSecCharacteristicDecodedValue);
-    configuration.RuntimeInSec = runtimeInSecCharacteristicValue;
-
     runtimeInSecCharacteristic.addEventListener(characteristicValueChangedEventName, async (event) => {
-      const runtimeInSecCharacteristicNotificationValue = await this.parseCharacteristicNotificationStringValueAsNumber(event);
-      configuration.RuntimeInSec = runtimeInSecCharacteristicNotificationValue;
-      return true;
+      const runtimeInSecCharacteristicValue: number = await this.parseCharacteristicNotificatioStringValueAsNumber(event);
+      configuration.runtimeInSec = runtimeInSecCharacteristicValue;
     });
     await runtimeInSecCharacteristic.startNotifications();
 
-    const modeCharacteristic: BluetoothRemoteGATTCharacteristic = await customService.getCharacteristic(BleConstants.CustomService.Characteristics.Mode);
-    const modeCharacteristicRawValue: DataView = await modeCharacteristic.readValue();
-    const modeCharacteristicDecodedValue: string = ConfigurationService.decoder.decode(modeCharacteristicRawValue);
-    const modeCharacteristicValue: number = parseInt(modeCharacteristicDecodedValue);
-    configuration.Mode = modeCharacteristicValue;
-
     const isExplodedCharacteristic: BluetoothRemoteGATTCharacteristic = await customService.getCharacteristic(BleConstants.CustomService.Characteristics.IsExploded);
-    const isExplodedCharacteristicRawValue: DataView = await isExplodedCharacteristic.readValue();
-    const isExplodedCharacteristicDecodedValue: string = ConfigurationService.decoder.decode(isExplodedCharacteristicRawValue);
-    const isExplodedCharacteristicValue: number = parseInt(isExplodedCharacteristicDecodedValue);
-    configuration.IsExploded = !!isExplodedCharacteristicValue;
-
     isExplodedCharacteristic.addEventListener(characteristicValueChangedEventName, async (event) => {
-      const isExplodedCharacteristicNotificationValue = await this.parseCharacteristicNotificationStringValueAsBoolean(event);
-      configuration.IsExploded = isExplodedCharacteristicNotificationValue;
-      return true;
+      const isExplodedCharacteristicNotificationValue: number = await this.parseCharacteristicNotificatioStringValueAsNumber(event);
+      configuration.isExploded = !!isExplodedCharacteristicNotificationValue;
     });
     await isExplodedCharacteristic.startNotifications();
-
-    const explodeDurationInMsCharacteristic: BluetoothRemoteGATTCharacteristic = await customService.getCharacteristic(BleConstants.CustomService.Characteristics.ExplodeDurationInMs);
-    const explodeDurationInMsCharacteristicRawValue: DataView = await explodeDurationInMsCharacteristic.readValue();
-    const explodeDurationInMsCharacteristicDecodedValue: string = ConfigurationService.decoder.decode(explodeDurationInMsCharacteristicRawValue);
-    const explodeDurationInMsCharacteristicValue: number = parseInt(explodeDurationInMsCharacteristicDecodedValue);
-    configuration.ExplodeDurationInMs = explodeDurationInMsCharacteristicValue;
-
-    ConfigurationService.configurationSubject.next(configuration);
   }
 
   private async parseCharacteristicNotificationByteValueAsNumber(event: Event): Promise<number> {
@@ -114,21 +144,29 @@ export class ConfigurationService {
     return characteristicNotificationValue;
   }
 
-  private async parseCharacteristicNotificationStringValueAsBoolean(event: Event): Promise<boolean> {
-    const characteristicNotification: BluetoothRemoteGATTCharacteristic = event.target as BluetoothRemoteGATTCharacteristic;
-    const characteristicNotificationRawValue: DataView = await characteristicNotification.readValue();
-    const characteristicNotificationDecodedValue: string = ConfigurationService.decoder.decode(characteristicNotificationRawValue);
-    const characteristicNotificationValue: number = parseInt(characteristicNotificationDecodedValue);
-
-    return !!characteristicNotificationValue;
-  }
-
-  private async parseCharacteristicNotificationStringValueAsNumber(event: Event): Promise<number> {
+  private async parseCharacteristicNotificatioStringValueAsNumber(event: Event): Promise<number> {
     const characteristicNotification: BluetoothRemoteGATTCharacteristic = event.target as BluetoothRemoteGATTCharacteristic;
     const characteristicNotificationRawValue: DataView = await characteristicNotification.readValue();
     const characteristicNotificationDecodedValue: string = ConfigurationService.decoder.decode(characteristicNotificationRawValue);
     const characteristicNotificationValue: number = parseInt(characteristicNotificationDecodedValue);
 
     return characteristicNotificationValue;
+  }
+
+  private async parseCharacteristicByteValueAsNumber(service: BluetoothRemoteGATTService, characteristicUuid: string): Promise<number> {
+    const characteristic: BluetoothRemoteGATTCharacteristic = await service.getCharacteristic(characteristicUuid);
+    const characteristicRawValue: DataView = await characteristic.readValue();
+    const characteristicValue: number = characteristicRawValue.getUint8(0);
+
+    return characteristicValue;
+  }
+
+  private async parseCharacteristicStringAsNumber(service: BluetoothRemoteGATTService, characteristicUuid: string): Promise<number> {
+    const characteristic: BluetoothRemoteGATTCharacteristic = await service.getCharacteristic(characteristicUuid);
+    const characteristicRawValue: DataView = await characteristic.readValue();
+    const characteristicDecodedValue: string = ConfigurationService.decoder.decode(characteristicRawValue);
+    const characteristicValue: number = parseInt(characteristicDecodedValue);
+
+    return characteristicValue;
   }
 }
