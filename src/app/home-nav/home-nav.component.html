@@ -5,16 +5,17 @@
   </a>
 
   <ul class="nav navbar-nav ml-auto">
-    <button type="button" *ngIf="!isBluetoothDeviceConnected" (click)="onConnectBluetoothClick()"
-      class="btn btn-outline-info">
-      Connect
-      <em class="fab fa-bluetooth-b"></em>
-    </button>
-
-    <button type="button" *ngIf="isBluetoothDeviceConnected" (click)="onDisconnectBluetoothClick()"
-      class="btn btn-outline-warning">
-      Disconnect
-      <em class="fab fa-bluetooth-b"></em>
-    </button>
+    <li>
+      <button type="button" *ngIf="!isBluetoothDeviceConnected" (click)="onConnectBluetoothClick()"
+        class="btn btn-outline-info">
+        Connect
+        <em class="fab fa-bluetooth-b"></em>
+      </button>
+      <button type="button" *ngIf="isBluetoothDeviceConnected" (click)="onDisconnectBluetoothClick()"
+        class="btn btn-outline-warning">
+        Disconnect
+        <em class="fab fa-bluetooth-b"></em>
+      </button>
+    </li>
   </ul>
 </nav>
