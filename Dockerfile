@@ -1,4 +1,4 @@
-FROM node:latest AS build
+FROM node:12.19.0-alpine3.12 AS build
 
 ARG BUILD_NUMBER
 RUN test -n "${BUILD_NUMBER}" || (echo "BUILD_NUMBER argument not provided" && false)
@@ -9,7 +9,7 @@ RUN npm version "${BUILD_NUMBER}" --no-git-tag-version
 RUN npm install
 RUN npm run ng build -- -c=production
 
-FROM emeraldsquad/sonar-scanner:latest
+FROM emeraldsquad/sonar-scanner:1.0.2
 
 ARG BUILD_NUMBER
 RUN test -n "${BUILD_NUMBER}" || (echo "BUILD_NUMBER argument not provided" && false)
@@ -32,7 +32,7 @@ RUN sonar-scanner \
   -D sonar.host.url="${SONAR_HOST_URL}" \
   -D sonar.login="${SONAR_LOGIN}"
 
-FROM nginx:latest
+FROM nginx:1.18.0-alpine
 COPY --from=build /app/docker/nginx.conf /etc/nginx/conf.d/default.conf
 
 WORKDIR /usr/share/nginx/html
