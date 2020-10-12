@@ -8,12 +8,16 @@
     <li>
       <button type="button" *ngIf="!isBluetoothDeviceConnected" (click)="onConnectBluetoothClick()"
         class="btn btn-outline-info">
-        Connect
+        <span i18n>
+          Connect
+        </span>
         <em class="fab fa-bluetooth-b"></em>
       </button>
       <button type="button" *ngIf="isBluetoothDeviceConnected" (click)="onDisconnectBluetoothClick()"
         class="btn btn-outline-warning">
-        Disconnect
+        <span i18n>
+          Disconnect
+        </span>
         <em class="fab fa-bluetooth-b"></em>
       </button>
     </li>

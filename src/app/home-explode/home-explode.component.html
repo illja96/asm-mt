@@ -2,10 +2,10 @@
   <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10 col-8">
     <button [disabled]="isInitiateButtonLocked || configuration.isExploded" (click)="onInitiateExplosionClick()"
       class="btn btn-lg btn-outline-danger btn-block">
-      <span *ngIf="!configuration.isExploded">
+      <span i18n *ngIf="!configuration.isExploded">
         Initiate explosion
       </span>
-      <span *ngIf="configuration.isExploded">
+      <span i18n *ngIf="configuration.isExploded">
         Explosion already initiated
       </span>
     </button>

@@ -19,6 +19,8 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
+            "localize": true,
+            "i18nMissingTranslation": "error",
             "assets": [
               "src/favicon.ico",
               "src/assets",
@@ -59,6 +61,16 @@
               ],
               "serviceWorker": true,
               "ngswConfigPath": "ngsw-config.json"
+            },
+            "en": {
+              "localize": [
+                "en"
+              ]
+            },
+            "ru": {
+              "localize": [
+                "ru"
+              ]
             }
           }
         },
@@ -70,6 +82,12 @@
           "configurations": {
             "production": {
               "browserTarget": "airsoft-smart-mine-management-tool:build:production"
+            },
+            "en": {
+              "browserTarget": "airsoft-smart-mine-management-tool:build:en"
+            },
+            "ru": {
+              "browserTarget": "airsoft-smart-mine-management-tool:build:ru"
             }
           }
         },
@@ -88,6 +106,18 @@
             "exclude": [
               "**/node_modules/**"
             ]
+          }
+        }
+      },
+      "i18n": {
+        "sourceLocale": {
+          "code": "en",
+          "baseHref": "en"
+        },
+        "locales": {
+          "ru": {
+            "translation": "src/locale/messages.ru.xlf",
+            "baseHref": "ru"
           }
         }
       }

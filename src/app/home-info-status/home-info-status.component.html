@@ -3,7 +3,10 @@
     <h1>
       <em class="fas fa-skull-crossbones"></em>
       <br> <br>
-      NO CONNECTION
+
+      <span i18n>
+        NO CONNECTION
+      </span>
     </h1>
   </div>
 </div>
@@ -12,7 +15,7 @@
   <div class="col-12 text-center">
     <h1 *ngIf="batteryLevel === undefined" class="text-primary">
       <div class="spinner-border" role="status">
-        <span class="sr-only">
+        <span i18n class="sr-only">
           Loading...
         </span>
       </div>
@@ -37,7 +40,7 @@
   <div class="col-6 text-center">
     <h1 *ngIf="configuration === undefined || configuration.mode === undefined" class="text-primary">
       <div class="spinner-border" role="status">
-        <span class="sr-only">
+        <span i18n class="sr-only">
           Loading...
         </span>
       </div>
@@ -61,7 +64,7 @@
   <div class="col-6 text-center">
     <h1 *ngIf="configuration === undefined || configuration.isExploded === undefined" class="text-primary">
       <div class="spinner-border" role="status">
-        <span class="sr-only">
+        <span i18n class="sr-only">
           Loading...
         </span>
       </div>

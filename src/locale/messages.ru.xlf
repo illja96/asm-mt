@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="en-US" trgLang="ru-RU">
+	<file original="ng.template" id="ngi18n">
+		<unit id="1207285112762375256">
+			<notes>
+				<note category="location">
+					src/app/home-configuration/home-configuration.component.html:2,4
+				</note>
+			</notes>
+			<segment>
+				<source>
+					Configuration
+				</source>
+				<target>
+					Конфигурация
+				</target>
+			</segment>
+		</unit>
+		<unit id="5753715106115973539">
+			<notes>
+				<note category="location">
+					src/app/home-configuration/home-configuration.component.html:10,12
+				</note>
+			</notes>
+			<segment>
+				<source>
+					Configuration
+				</source>
+				<target>
+					Конфигурация
+				</target>
+			</segment>
+		</unit>
+		<unit id="5189592706341805234">
+			<notes>
+				<note category="location">
+					src/app/home-configuration/home-configuration.component.html:15,17
+				</note>
+			</notes>
+			<segment>
+				<source>
+					Mode:
+				</source>
+				<target>
+					Режим:
+				</target>
+			</segment>
+		</unit>
+		<unit id="7273386304490733736">
+			<notes>
+				<note category="location">
+					src/app/home-configuration/home-configuration.component.html:22,24
+				</note>
+			</notes>
+			<segment>
+				<source>
+					Loading...
+				</source>
+				<target>
+					Загрузка...
+				</target>
+			</segment>
+		</unit>
+		<unit id="4437528782975669716">
+			<notes>
+				<note category="location">
+					src/app/home-configuration/home-configuration.component.html:55,57
+				</note>
+			</notes>
+			<segment>
+				<source>
+					Explode duration:
+				</source>
+				<target>
+					Длительность взрыва:
+				</target>
+			</segment>
+		</unit>
+		<unit id="9123664173374707193">
+			<notes>
+				<note category="location">
+					src/app/home-configuration/home-configuration.component.html:61,63
+				</note>
+				<note category="location">
+					src/app/home-configuration/home-configuration.component.html:87,89
+				</note>
+				<note category="location">
+					src/app/home-configuration/home-configuration.component.html:107,109
+				</note>
+				<note category="location">
+					src/app/home-configuration/home-configuration.component.html:127,129
+				</note>
+			</notes>
+			<segment>
+				<source>
+					Loading...
+				</source>
+				<target>
+					Загрузка...
+				</target>
+			</segment>
+		</unit>
+		<unit id="1556514972726587900">
+			<notes>
+				<note category="location">
+					src/app/home-configuration/home-configuration.component.html:68,71
+				</note>
+			</notes>
+			<segment>
+				<source>
+					<ph id="0" equiv="INTERPOLATION" disp="{{ explodeDurationInMs.value }}"/>
+					milliseconds
+				</source>
+				<target>
+					<ph id="0" equiv="INTERPOLATION" disp="{{ explodeDurationInMs.value }}"/>
+					миллисекунд
+				</target>
+			</segment>
+		</unit>
+		<unit id="4299513675280993237">
+			<notes>
+				<note category="location">
+					src/app/home-configuration/home-configuration.component.html:81,83
+				</note>
+			</notes>
+			<segment>
+				<source>
+					Is exploded:
+				</source>
+				<target>
+					Взорвалось:
+				</target>
+			</segment>
+		</unit>
+		<unit id="3999608738445946804">
+			<notes>
+				<note category="location">
+					src/app/home-configuration/home-configuration.component.html:101,103
+				</note>
+			</notes>
+			<segment>
+				<source>
+					Version:
+				</source>
+				<target>
+					Версия:
+				</target>
+			</segment>
+		</unit>
+		<unit id="4791585147126613070">
+			<notes>
+				<note category="location">
+					src/app/home-configuration/home-configuration.component.html:121,123
+				</note>
+			</notes>
+			<segment>
+				<source>
+					Runtime:
+				</source>
+				<target>
+					Таймер:
+				</target>
+			</segment>
+		</unit>
+		<unit id="1340158735829077894">
+			<notes>
+				<note category="location">
+					src/app/home-configuration/home-configuration.component.html:157,159
+				</note>
+			</notes>
+			<segment>
+				<source>
+					Save
+				</source>
+				<target>
+					Сохранить
+				</target>
+			</segment>
+		</unit>
+		<unit id="8630557173465822768">
+			<notes>
+				<note category="location">
+					src/app/home-explode/home-explode.component.html:5,7
+				</note>
+			</notes>
+			<segment>
+				<source>
+					Initiate explosion
+				</source>
+				<target>
+					Иницировать взрыв
+				</target>
+			</segment>
+		</unit>
+		<unit id="6876145411352923805">
+			<notes>
+				<note category="location">
+					src/app/home-explode/home-explode.component.html:8,10
+				</note>
+			</notes>
+			<segment>
+				<source>
+					Explosion already initiated
+				</source>
+				<target>
+					Взрыв уже инициирован
+				</target>
+			</segment>
+		</unit>
+		<unit id="4281877800730753980">
+			<notes>
+				<note category="location">
+					src/app/home-footer/home-footer.component.html:13,15
+				</note>
+			</notes>
+			<segment>
+				<source>
+					Powered and developed by
+				</source>
+				<target>
+					Разработано
+				</target>
+			</segment>
+		</unit>
+		<unit id="5047624320317563696">
+			<notes>
+				<note category="location">
+					src/app/home-info-status/home-info-status.component.html:7,9
+				</note>
+			</notes>
+			<segment>
+				<source>
+					NO CONNECTION
+				</source>
+				<target>
+					НЕТ ПОДКЛЮЧЕНИЯ
+				</target>
+			</segment>
+		</unit>
+		<unit id="1337336182107364964">
+			<notes>
+				<note category="location">
+					src/app/home-info-status/home-info-status.component.html:18,20
+				</note>
+				<note category="location">
+					src/app/home-info-status/home-info-status.component.html:43,45
+				</note>
+				<note category="location">
+					src/app/home-info-status/home-info-status.component.html:67,69
+				</note>
+			</notes>
+			<segment>
+				<source>
+					Loading...
+				</source>
+				<target>
+					Загрузка...
+				</target>
+			</segment>
+		</unit>
+		<unit id="1884674942703355521">
+			<notes>
+				<note category="location">
+					src/app/home-nav/home-nav.component.html:11,13
+				</note>
+			</notes>
+			<segment>
+				<source>
+					Connect
+				</source>
+				<target>
+					Подключиться
+				</target>
+			</segment>
+		</unit>
+		<unit id="2789793843712200571">
+			<notes>
+				<note category="location">
+					src/app/home-nav/home-nav.component.html:18,20
+				</note>
+			</notes>
+			<segment>
+				<source>
+					Disconnect
+				</source>
+				<target>
+					Отключиться
+				</target>
+			</segment>
+		</unit>
+	</file>
+</xliff>

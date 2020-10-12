@@ -1,4 +1,4 @@
-<button type="button" data-toggle="collapse" data-target="#configuration" aria-expanded="false"
+<button i18n type="button" data-toggle="collapse" data-target="#configuration" aria-expanded="false"
   aria-controls="configuration" class="btn btn-outline-info btn-block">
   Configuration
 </button>
@@ -7,19 +7,19 @@
   <div class="card card-body">
     <form [formGroup]="configurationForm" (ngSubmit)="onConfigurationFormSubmit()">
       <fieldset>
-        <legend>
+        <legend i18n>
           Configuration
         </legend>
 
         <div class="form-group row">
-          <label for="mode" class="col-4 col-form-label">
+          <label i18n for="mode" class="col-4 col-form-label">
             Mode:
           </label>
 
           <div *ngIf="mode.value == undefined" class="col-6">
             <span class="form-control-plaintext">
               <div class="spinner-border spinner-border-sm" role="status">
-                <span class="sr-only">
+                <span i18n class="sr-only">
                   Loading...
                 </span>
               </div>
@@ -52,20 +52,20 @@
         </div>
 
         <div class="form-group row">
-          <label for="explodeDurationInMs" class="col-4 col-form-label">
+          <label i18n for="explodeDurationInMs" class="col-4 col-form-label">
             Explode duration:
           </label>
 
           <div *ngIf="explodeDurationInMs.value == undefined" class="col-6">
             <div class="spinner-border spinner-border-sm" role="status">
-              <span class="sr-only">
+              <span i18n class="sr-only">
                 Loading...
               </span>
             </div>
           </div>
 
           <div *ngIf="explodeDurationInMs.value != undefined" class="col-6">
-            <span class="form-control-plaintext">
+            <span i18n class="form-control-plaintext">
               {{ explodeDurationInMs.value }}
               milliseconds
             </span>
@@ -78,13 +78,13 @@
         </div>
 
         <div class="form-group row">
-          <label for="isExploded" class="col-4 col-form-label">
+          <label i18n for="isExploded" class="col-4 col-form-label">
             Is exploded:
           </label>
 
           <div *ngIf="isExploded.value == undefined" class="col-6">
             <div class="spinner-border spinner-border-sm" role="status">
-              <span class="sr-only">
+              <span i18n class="sr-only">
                 Loading...
               </span>
             </div>
@@ -98,13 +98,13 @@
         </div>
 
         <div class="form-group row">
-          <label for="version" class="col-4 col-form-label">
+          <label i18n for="version" class="col-4 col-form-label">
             Version:
           </label>
 
           <div *ngIf="version.value == undefined" class="col-6">
             <div class="spinner-border spinner-border-sm" role="status">
-              <span class="sr-only">
+              <span i18n class="sr-only">
                 Loading...
               </span>
             </div>
@@ -118,13 +118,13 @@
         </div>
 
         <div class="form-group row">
-          <label for="runtimeInSec" class="col-4 col-form-label">
+          <label i18n for="runtimeInSec" class="col-4 col-form-label">
             Runtime:
           </label>
 
           <div *ngIf="runtimeInSec.value == undefined" class="col-6">
             <div class="spinner-border spinner-border-sm" role="status">
-              <span class="sr-only">
+              <span i18n class="sr-only">
                 Loading...
               </span>
             </div>
@@ -153,7 +153,7 @@
           </div>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-block"
+        <button i18n type="submit" class="btn btn-primary btn-block"
           [disabled]="!configurationForm.valid || configurationForm.pristine">
           Save
         </button>
