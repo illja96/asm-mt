@@ -36,6 +36,7 @@ FROM nginx:1.18.0-alpine
 COPY --from=build /app/docker/nginx.conf /etc/nginx/conf.d/default.conf
 
 WORKDIR /usr/share/nginx/html
+RUN rm index.html
 COPY --from=build /app/dist/airsoft-smart-mine-management-tool ./
 
 CMD ["nginx", "-g", "daemon off;"]
