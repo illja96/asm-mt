@@ -5,5 +5,6 @@
     "ivaxor"
   ],
   "xliffSync.baseFile": "messages.xlf",
-  "i18n-ally.localesPaths": "src/locale"
+  "i18n-ally.localesPaths": "src/locale",
+  "git.ignoreLimitWarning": true
 }
