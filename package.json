@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start-en": "ng serve --configuration=en",
-    "start-ru": "ng serve --configuration=ru",
+    "start-en": "ng serve --configuration=en-US",
+    "start-ru": "ng serve --configuration=ru-RU",
     "build": "ng build",
     "lint": "ng lint",
     "i18n": "ng xi18n --output-path src/locale --format=xlf2"
