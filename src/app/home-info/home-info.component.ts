@@ -25,7 +25,7 @@ export class HomeInfoComponent {
 
     this.bleConfigurationService.getConfiguration()
       .pipe(filter((configuration: Configuration) => configuration !== undefined))
-      .subscribe((configuration: Configuration) => this.isExplosionInitiationAvailable = configuration.mode === Mode.Any || configuration.mode == Mode.BleOnly);
+      .subscribe((configuration: Configuration) => this.isExplosionInitiationAvailable = configuration.mode === Mode.Any || configuration.mode === Mode.BleOnly);
 
     this.bleConfigurationService.getConfiguration()
       .pipe(filter((configuration: Configuration) => configuration === undefined))

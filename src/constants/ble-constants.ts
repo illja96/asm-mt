@@ -4,7 +4,7 @@ export const BleConstants = {
     Characteristics: {
       BatteryLevel: '00002a19-0000-1000-8000-00805f9b34fb'
     }
-  },  
+  },
   CustomService: {
     UUID: '00000001-0001-0001-0001-000000000000',
     Characteristics: {

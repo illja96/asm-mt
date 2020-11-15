@@ -1,4 +1,4 @@
-import { Mode } from "./mode";
+import { Mode } from './mode';
 
 export class Configuration {
   public version: number;
