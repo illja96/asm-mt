@@ -116,12 +116,12 @@
       "i18n": {
         "sourceLocale": {
           "code": "en",
-          "baseHref": "/"
+          "baseHref": "/en/"
         },
         "locales": {
           "ru": {
             "translation": "src/locale/messages.ru.xlf",
-            "baseHref": "/"
+            "baseHref": "/ru/"
           }
         }
       }
