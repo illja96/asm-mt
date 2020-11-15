@@ -62,18 +62,18 @@
               "serviceWorker": true,
               "ngswConfigPath": "ngsw-config.json",
               "localize": [
-                "en-US",
-                "ru-RU"
+                "en",
+                "ru"
               ]
             },
-            "en-US": {
+            "en": {
               "localize": [
-                "en-US"
+                "en"
               ]
             },
-            "ru-RU": {
+            "ru": {
               "localize": [
-                "ru-RU"
+                "ru"
               ]
             }
           }
@@ -87,11 +87,11 @@
             "production": {
               "browserTarget": "airsoft-smart-mine-management-tool:build:production"
             },
-            "en-US": {
-              "browserTarget": "airsoft-smart-mine-management-tool:build:en-US"
+            "en": {
+              "browserTarget": "airsoft-smart-mine-management-tool:build:en"
             },
-            "ru-RU": {
-              "browserTarget": "airsoft-smart-mine-management-tool:build:ru-RU"
+            "ru": {
+              "browserTarget": "airsoft-smart-mine-management-tool:build:ru"
             }
           }
         },
@@ -114,11 +114,14 @@
         }
       },
       "i18n": {
-        "sourceLocale": "en-US",
+        "sourceLocale": {
+          "code": "en",
+          "baseHref": "en/"
+        },
         "locales": {
-          "ru-RU": {
-            "baseHref": "ru-RU/",
-            "translation": "src/locale/messages.ru-RU.xlf"
+          "ru": {
+            "translation": "src/locale/messages.ru.xlf",
+            "baseHref": "ru/"
           }
         }
       }
